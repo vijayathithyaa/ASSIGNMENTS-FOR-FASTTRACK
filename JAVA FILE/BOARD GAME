@@ -1,0 +1,49 @@
+//TIC TAC TOE
+import java.util.Scanner;
+public class  TicTacToe
+{
+public static void main(String[] args) 
+{
+Scanner sc = new Scanner(System.in);
+char p = 'X';
+char[] b = {'1','2','3','4','5','6','7','8','9'};
+int pos;
+boolean game = true;
+while(game)
+{
+System.out.println("\n "+b[0]+" | "+b[1]+" | "+b[2]);
+System.out.println("-----------");
+System.out.println(" "+b[3]+" | "+b[4]+" | "+b[5]);
+System.out.println("-----------");
+System.out.println(" "+b[6]+" | "+b[7]+" | "+b[8]);
+System.out.print("\nPlayer " + p + ", choose (1-9): ");
+pos = sc.nextInt();
+if(pos<1 || pos>9 || b[pos-1]=='X' || b[pos-1]=='O'){
+System.out.println("Invalid");
+continue;
+}
+b[pos-1] = p;
+if((b[0]==p && b[1]==p && b[2]==p) ||
+(b[3]==p && b[4]==p && b[5]==p) ||
+(b[6]==p && b[7]==p && b[8]==p) ||
+(b[0]==p && b[3]==p && b[6]==p) ||
+(b[1]==p && b[4]==p && b[7]==p) ||
+(b[2]==p && b[5]==p && b[8]==p) ||
+(b[0]==p && b[4]==p && b[8]==p) ||
+(b[2]==p && b[4]==p && b[6]==p)) 
+{
+System.out.println("\nPlayer " + p + " Wins!");
+game = false;
+}
+boolean full = true;
+for(int i=0;i<9;i++)
+if(b[i]!='X' && b[i]!='O') full=false;
+if(full && game)
+{
+System.out.println("\nDraw!");
+game = false;
+}
+p = (p=='X') ? 'O' : 'X';
+}
+}
+}
