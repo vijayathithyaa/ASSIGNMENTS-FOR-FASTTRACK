@@ -1,0 +1,112 @@
+//OOPS CONCEPT
+import java.util.Scanner;
+ class Board 
+{
+private char[] cells;
+public Board() 
+{
+cells = new char[]{'1','2','3','4','5','6','7','8','9'};
+}
+public void show() 
+{
+System.out.println();
+System.out.println(" " + cells[0] + " | " + cells[1] + " | " + cells[2
+System.out.println("-----------");
+System.out.println(" " + cells[3] + " | " + cells[4] + " | " + cells[5]);
+System.out.println("-----------");
+System.out.println(" " + cells[6] + " | " + cells[7] + " | " + cells[8]);
+}
+public boolean mark(int pos, char player) 
+{
+if (pos < 1 || pos > 9) 
+return false;
+if (cells[pos-1] == 'X' || cells[pos-1] == 'O') 
+return false;
+cells[pos-1] = player;
+return true;
+}
+public boolean isWin(char p) 
+{
+int[][] win = 
+{
+ {0,1,2},{3,4,5},{6,7,8},
+ {0,3,6},{1,4,7},{2,5,8},
+ {0,4,8},{2,4,6}
+};
+for(int[] w : win) 
+{
+if(cells[w[0]]==p && cells[w[1]]==p && cells[w[2]]==p)
+return true;
+}
+return false;
+}
+public boolean isFull() 
+{
+for(char c : cells) 
+{
+if(c!='X' && c!='O') return false;
+}
+return true;
+}
+}
+class Game 
+{
+private Board board;
+private char turn;
+private Scanner scan;
+public Game()
+{
+board = new Board();
+turn = 'X';
+scan = new Scanner(System.in);
+}
+public void play()
+{
+boolean running = true;
+while(running)
+{
+board.show();
+System.out.print("\nPlayer " + turn + ", choose a box (1-9): ");
+int choice;
+try 
+{
+choice = scan.nextInt();
+}
+catch(Exception e) 
+{
+System.out.println("Please enter a valid number.");
+scan.nextLine();
+continue;
+}
+if(!board.mark(choice, turn)) 
+{
+System.out.println("Invalid move, try again.");
+continue;
+}
+if(board.isWin(turn)) 
+{
+board.show();
+System.out.println("\nPlayer " + turn + " wins!");
+running = false;
+}
+else if(board.isFull()) 
+{
+board.show();
+System.out.println("\nMatch Draw!");
+running = false;
+}
+else 
+{
+turn = (turn=='X') ? 'O' : 'X';
+}
+}
+}
+}
+public class ExpHand 
+{
+public static void main(String[] args) 
+{
+Game g = new Game();
+g.play();
+}
+}
